@@ -43,7 +43,7 @@ void arraySelectionSort(int array[1000], int length){
     }
     //print sorted list.
     for(i=0;i<length;i++){
-      printf("%d\t", array[i]);
+      printf("%d\n", array[i]);
     }
   }
 
