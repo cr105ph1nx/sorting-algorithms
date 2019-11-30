@@ -1,20 +1,25 @@
 #include<stdio.h>
 #include<stdlib.h>
-#include<string.h>
+
+#define MAXARRAY 1000
 
 int i, j, min, max, option;
+//Set size of the array, equivalently ask the user for the value.
+int size=1000;
 
 void printArray(int array[], int size) {
     for (i=0;i<size;i++)
         printf("%d ", array[i]);
     printf("\n");
 }
+
 void swap(int *x, int *y){
   int temp;
   temp = *x;
   *x = *y;
   *y = temp;
 }
+
 int AscendingOrDescending(){
   printf("Do You want to sort Ascendingly or Descendinly?\n\t(0) Ascendingly\n\t(else) Descendinly\n>>");
   scanf("%d",&option);
@@ -73,13 +78,11 @@ void arrayInsertionSort(int array[], int size){
 }
 
 int main(){
-  int array[1000];
-  //Set size of the array, equivalently ask the user for the value.
-  int size=1000;
-  //Creates array of random numbers.
+  int array[MAXARRAY];
+  //Creates array of random numbers, equivalently ask the user to fill it.
   srand(0);
   int i;
-  for (i = 0; i < 100; i++) {
+  for (i = 0; i < 1000; i++) {
       array[i] = rand();
   }
 
@@ -91,7 +94,6 @@ int main(){
       case 1:arraySelectionSort(array, size);break;
       case 2:arrayBubbleSort(array, size);break;
       case 3:arrayInsertionSort(array, size);break;
-      default:printf("Invalid entry!\n");
   }
   return 0;
 }
