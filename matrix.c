@@ -11,9 +11,9 @@ int Pos;
 int **matrix = NULL; // This pointer will become the matrix after calling malloc.
 
 void updateString(char word[MAXWORD], int **matrix, int i){
-  int j;
-  for(j = 0 ; j < columns ; j++){
-    word[j] = matrix[i][j];
+  int l;
+  for(l = 0 ; l < columns ; l++){
+    word[l] = matrix[i][l];
   }
 }
 void swap(int **matrix, int i,int j){
@@ -35,9 +35,10 @@ int AscendingOrDescending(){
 
 void displayMatrix(int **matrix){
   printf("\nYour matrix:\n");
-  for (i = 0 ; i < rows ; i++){
-    for(j = 0 ; j < columns ; j++){
-      printf("\t%c", matrix[i][j]);
+  int l, m;
+  for (l = 0 ; l < rows ; l++){
+    for(m = 0 ; m < columns ; m++){
+      printf("\t%c", matrix[l][m]);
     }
     printf("\n");
   }
@@ -124,22 +125,27 @@ void matrixBubbleSort(int **matrix){
     // Selection sort Ascendinly.
     for(i = 0 ; i < rows-1 ; i++){
       for(j = 0 ; j < rows-i-1 ; j++){
-        swap(matrix, j, j++);
+        updateString(evaString, matrix, j);
+        updateString(currentString, matrix, j+1);
+        if(strcmp(evaString, currentString)>0){
+          swap(matrix, j, j+1);
+          displayMatrix(matrix);
+        }
       }
     }
-  }
   //displayMatrix(matrix);
 }else{
     //Selection sort Descendinly.
     for(i = 0 ; i < rows-1 ; i++){
-      updateString(evaString, matrix, i);
-      for(j = 1 ; j < rows-i ; j++)
-        updateString(currentString, matrix, j);
-        if(strcmp(currentString, evaString)>0)
-         swap(matrix, i, j);
+      for(j = 0 ; j < rows-i-1 ; j++){
+        updateString(evaString, matrix, j);
+        updateString(currentString, matrix, j+1);
+        if(strcmp(evaString, currentString)<0){
+          swap(matrix, j, j+1);
+          displayMatrix(matrix);
+        }
       }
-      displayMatrix(matrix);
-  }
+    }
 }
 void matrixInsertionSort(int **matrix){
   if(AscendingOrDescending()==0){
