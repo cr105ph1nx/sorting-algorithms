@@ -4,19 +4,18 @@
 
 #define MAXWORD 100
 
+char **matrix = NULL; // This pointer will become the matrix after calling malloc.
 char evaString[MAXWORD], currentString[MAXWORD];
-int i, j, k, rows, columns, option;
-int Pos;
+int option, rows, columns, Pos;
 
-int **matrix = NULL; // This pointer will become the matrix after calling malloc.
-
-void updateString(char word[MAXWORD], int **matrix, int i){
-  int l;
-  for(l = 0 ; l < columns ; l++){
-    word[l] = matrix[i][l];
+void updateString(char word[MAXWORD], char **matrix, int i){
+  int k;
+  for(k = 0 ; k < columns ; k++){
+    word[k] = matrix[i][k];
   }
+  word[k]='\0';
 }
-void swap(int **matrix, int i,int j){
+void swap(char **matrix, int i,int j){
   int tmp, k;
   for (k=0; k<rows; k++){
     tmp = matrix[i][k];
@@ -32,8 +31,13 @@ int AscendingOrDescending(){
   else
     return 1;
 }
-
-void displayMatrix(int **matrix){
+void fillMatrixRow(char word[MAXWORD], char **matrix, int i){
+  int k;
+  for(k = 0; word[k]!='\0'; k++){
+    matrix[i][k] = word[k];
+  }
+}
+void displayMatrix(char **matrix){
   printf("\nYour matrix:\n");
   int l, m;
   for (l = 0 ; l < rows ; l++){
@@ -43,7 +47,8 @@ void displayMatrix(int **matrix){
     printf("\n");
   }
 }
-int **createMatrix(){
+char **createMatrix(){
+  int i;
   char word[MAXWORD];
   //Asking for number of rows
   do{
@@ -71,14 +76,14 @@ int **createMatrix(){
       scanf("%s", &word);
     }while(strlen(word)-1>columns);
     //decomposing the word by char and putting each char in column
-    for(j = 0; j < columns ; j++){
-      matrix[i][j] = word[j];
-    }
+    fillMatrixRow(word, matrix, i);
   }
   return(matrix);
 }
+void matrixSelectionSort(char **matrix){
+  int i, j, k;
+  char evaString[MAXWORD], currentString[MAXWORD];
 
-void matrixSelectionSort(int **matrix){
   if(AscendingOrDescending()==0){ //selection sort Ascendingly.
     for(i = 0 ; i < rows ; i++){
       //evaString = matrix[i][0]
@@ -120,14 +125,17 @@ void matrixSelectionSort(int **matrix){
   }
 
 }
-void matrixBubbleSort(int **matrix){
+void matrixBubbleSort(char **matrix){
+  int i, j, k;
+  char evaString[MAXWORD], currentString[MAXWORD];
+
    if(AscendingOrDescending()==0){
     // Selection sort Ascendinly.
     for(i = 0 ; i < rows-1 ; i++){
       for(j = 0 ; j < rows-i-1 ; j++){
         updateString(evaString, matrix, j);
         updateString(currentString, matrix, j+1);
-        if(strcmp(evaString, currentString)>0){
+        if(strcmp(evaString, currentString) > 0){
           swap(matrix, j, j+1);
           displayMatrix(matrix);
         }
@@ -146,20 +154,68 @@ void matrixBubbleSort(int **matrix){
         }
       }
     }
+  }
 }
-void matrixInsertionSort(int **matrix){
+void matrixInsertionSort(char **matrix){
+  int i, j;
+  char key[MAXWORD], evaString[MAXWORD], currentString[MAXWORD];
+
   if(AscendingOrDescending()==0){
     //selction sort Ascendingly.
-    printf("hello world.\n");
+    for (i = 1; i < rows ; i++) {
+       //evaString=matrix[i]
+        updateString(evaString, matrix, i);
+        printf("%s\n", evaString);
+        updateString(key, matrix, i);
+
+        j = i - 1;
+        //currentString=matrix[j]
+        updateString(currentString, matrix, j);
+        /* Move elements of arr[0..i-1], that are
+          greater than key, to one position ahead
+          of their current position */
+        while (j >= 0 && strcmp(evaString, currentString) < 0) {
+             //matrix[j+1]=currentString
+             fillMatrixRow(currentString, matrix, j+1);
+             updateString(evaString, matrix, i);
+             j = j - 1;
+        }
+        //matrix[j+1]=matrix[i]
+        fillMatrixRow(key, matrix, j+1);
+        displayMatrix(matrix);
+    }
+    displayMatrix(matrix);
   }else{
     //Selection sort Descendinly.
-    printf("hello world.\n");
+    for (i = 1; i < rows ; i++) {
+       //evaString=matrix[i]
+        updateString(evaString, matrix, i);
+        updateString(key, matrix, i);
+
+        j = i - 1;
+        //currentString=matrix[j]
+        updateString(currentString, matrix, j);
+        /* Move elements of arr[0..i-1], that are
+          greater than key, to one position ahead
+          of their current position */
+        while (j >= 0 && strcmp(evaString, currentString) > 0) {
+             //matrix[j+1]=currentString
+             fillMatrixRow(currentString, matrix, j+1);
+             updateString(evaString, matrix, i);
+             j = j - 1;
+        }
+        //matrix[j+1]=matrix[i]
+        fillMatrixRow(key, matrix, j+1);
+        displayMatrix(matrix);
+    }
+       displayMatrix(matrix);
   }
 }
 
 int main(){
-  matrix = createMatrix(); //Creates matrix.
+  matrix = createMatrix();
   displayMatrix(matrix);
+
   printf("Choose a sorting option:\n\t(1) Selection Sort\n\t(2) Bubble Sort\n\t(3) Insertion Sort\n>> ");
   do {
       scanf("%d",&option);
