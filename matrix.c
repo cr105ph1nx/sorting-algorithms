@@ -123,7 +123,6 @@ void matrixSelectionSort(char **matrix){
     }
   displayMatrix(matrix);
   }
-
 }
 void matrixBubbleSort(char **matrix){
   int i, j, k;
@@ -171,9 +170,6 @@ void matrixInsertionSort(char **matrix){
         j = i - 1;
         //currentString=matrix[j]
         updateString(currentString, matrix, j);
-        /* Move elements of arr[0..i-1], that are
-          greater than key, to one position ahead
-          of their current position */
         while (j >= 0 && strcmp(evaString, currentString) < 0) {
              //matrix[j+1]=currentString
              fillMatrixRow(currentString, matrix, j+1);
@@ -195,9 +191,6 @@ void matrixInsertionSort(char **matrix){
         j = i - 1;
         //currentString=matrix[j]
         updateString(currentString, matrix, j);
-        /* Move elements of arr[0..i-1], that are
-          greater than key, to one position ahead
-          of their current position */
         while (j >= 0 && strcmp(evaString, currentString) > 0) {
              //matrix[j+1]=currentString
              fillMatrixRow(currentString, matrix, j+1);
@@ -211,7 +204,6 @@ void matrixInsertionSort(char **matrix){
        displayMatrix(matrix);
   }
 }
-
 int main(){
   matrix = createMatrix();
   displayMatrix(matrix);
@@ -225,7 +217,6 @@ int main(){
       case 2:matrixBubbleSort(matrix);break;
       case 3:matrixInsertionSort(matrix);break;
   }
-
   free(matrix);
   return 0;
 }
