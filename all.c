@@ -4,12 +4,17 @@
 
 #define MAXWORD 100
 
+typedef struct Node{
+  char elt[MAXWORD];
+  struct Node *next;
+}Node;
+
 char **matrixStr = NULL; // This pointer will become the matrix after calling malloc.
 int **matrixInt = NULL; // This pointer will become the matrix after calling malloc.
 int *array = NULL;
 
 char evaString[MAXWORD], currentString[MAXWORD];
-int option, size, rows, columns, Pos, min, max;
+int option, size, rows, columns;
 
 int AscendingOrDescending(){
   printf("Do You want to sort Ascendingly or Descendinly?\n\t(0) Ascendingly\n\t(else) Descendinly\n>>");
@@ -49,26 +54,26 @@ void swapArray(int *array, int x, int y){
   array[y] = temp;
 }
 int *arraySelectionSort(int *array, int size){
-  int i, j;
+  int i, j, minmax, Pos;
   if(AscendingOrDescending() == 0){
     //selction sort Ascendingly.
     for(i = 0 ; i < size ; i++){
-      min = array[i];
+      minmax = array[i];
       Pos = i;
       for(j = i+1 ; j < size ; j++)
-        if(array[j] < min){
-          min = array[j];
+        if(array[j] < minmax){
+          minmax = array[j];
           Pos = j;
         }
         swapArray(array, i, Pos);
     }
   }else{
     for(i = 0; i < size ; i++){
-      max = array[i];
+      minmax = array[i];
       Pos = i;
       for(j = i+1 ; j < size ; j++)
-        if(array[j] > max){
-          max = array[j];
+        if(array[j] > minmax){
+          minmax = array[j];
           Pos = j;
         }
       swapArray(array, i, Pos);
@@ -187,7 +192,7 @@ void swapMatrix(char **matrixStr, int i,int j){
   }
 }
 void matrixStrSelectionSort(char **matrixStr){
-  int i, j, k;
+  int i, j, k, Pos;
   char evaString[MAXWORD], currentString[MAXWORD];
 
   if(AscendingOrDescending()==0){ //selection sort Ascendingly.
@@ -383,16 +388,16 @@ int *createArrayFromMatrix(){
   return(array);
 }
 void matrixIntSelectionSort(int **matrixInt){
-  int i, j, k, tmp;
+  int i, j, k, tmp, Pos, minmax;
 
   if(AscendingOrDescending() == 0){
     for(i = 0 ; i < rows ; i++){ //every row
       for(j = 0 ; j < columns ; j++){ //every column
-        min = matrixInt[i][j];
+        minmax = matrixInt[i][j];
         Pos = j;
         for(k = j+1 ; k < columns ; k++){//search min
-          if(matrixInt[i][k] < min){
-            min  = matrixInt[i][k];
+          if(matrixInt[i][k] < minmax){
+            minmax  = matrixInt[i][k];
             Pos = k;
           }
         }
@@ -402,11 +407,11 @@ void matrixIntSelectionSort(int **matrixInt){
   }else{
     for(i = 0 ; i < rows ; i++){ //every row
       for(j = 0 ; j < columns ; j++){ //every column
-        min = matrixInt[i][j];
+        minmax = matrixInt[i][j];
         Pos = j;
         for(k = j+1 ; k < columns ; k++){//search min
-          if(matrixInt[i][k] > min){
-            min  = matrixInt[i][k];
+          if(matrixInt[i][k] > minmax){
+            minmax  = matrixInt[i][k];
             Pos = k;
           }
         }
@@ -474,6 +479,169 @@ void matrixIntInsertionSort(int **matrixInt){
 }
 
 //Linked Lists functions
+Node *createNode( ){
+  Node  *p= (Node *) malloc(sizeof(Node)) ;
+  if (p == NULL){
+    printf("erreur: Plus d'espace memoire disponible\n") ;
+    exit(EXIT_FAILURE);
+  }
+    return p;
+}
+void displayList(Node *head){
+  Node *p = head;
+  printf(" List Elements :\n");
+  while(p != NULL){
+    printf("%s\t", p->elt);
+    p = p->next;
+  }
+  printf("\n");
+}
+Node *addAfter(Node  *prev, char v[MAXWORD]){
+  Node *p = createNode();
+  int i;
+
+  for(i = 0 ; v[i]!='\0' ; i++){
+      p->elt[i] = v[i];
+  }
+
+  p->next = prev->next;
+  prev->next = p;
+  return p;
+}
+Node *createList(){
+  Node tmp;
+  Node *prev ;
+  int n, i;
+  char v[MAXWORD];
+
+  printf("What is the number of elts in the list? ");
+  scanf("%d",&n);
+  tmp.next = NULL;
+  prev = &tmp;
+  for(i = 1 ; i <= n; i++){
+    printf("Give the value number %d > ", i);
+    scanf("%s", &v);
+    prev = addAfter(prev, v);
+   }
+   return tmp.next;
+}
+Node *searchAdr(Node *p, int tmp){
+  Node  *p1, *pMinMax = p;
+
+  if (p == NULL)
+    return NULL;
+    p1 = p->next;
+
+  if(tmp == 0){
+    while (p1 != NULL){
+      if (strcmp(p1->elt, pMinMax->elt) < 0)
+        pMinMax = p1;
+        p1 = p1->next;
+       }
+  }else{
+    while (p1 != NULL){
+      if (strcmp(p1->elt, pMinMax->elt) > 0)
+        pMinMax = p1;
+        p1 = p1->next;
+       }
+  }
+  return pMinMax;
+}
+Node *sortedInsert(Node *head, Node *new_node, int tmp){
+    Node *prev, *p;
+
+    if(tmp == 0){
+      /* Cas speciale ou le noeud est a inserer en head de liste */
+      if (head == NULL || strcmp(head->elt, new_node->elt) >= 0){
+          new_node->next = head;
+          head = new_node;
+      }
+      else{
+          /* Localiser le prevedent apres qui le noeud new_node doit etre inserer */
+          prev = head;
+          p = head->next;
+          while (p!=NULL && strcmp(p->elt, new_node->elt) < 0){
+              prev = p;
+              p = p->next;
+          }
+          new_node->next = prev->next;
+          prev->next = new_node;
+      }
+    }else{
+      /* Cas speciale ou le noeud est a inserer en head de liste */
+      if (head == NULL || strcmp(head->elt, new_node->elt) <= 0){
+          new_node->next = head;
+          head = new_node;
+      }
+      else{
+          /* Localiser le prevedent apres qui le noeud new_node doit etre inserer */
+          prev = head;
+          p = head->next;
+          while (p!=NULL && strcmp(p->elt, new_node->elt) > 0){
+              prev = p;
+              p = p->next;
+          }
+          new_node->next = prev->next;
+          prev->next = new_node;
+      }
+    }
+    return head;
+}
+Node *nodeSelectionSort(Node *head){
+  Node *pMinMax, *p = head;
+  char temp[MAXWORD];
+
+  if(AscendingOrDescending() == 0){
+    while (p->next != NULL){
+      pMinMax = searchAdr(p, 0);
+      /* permuter les elts dans p et pMin si p est # de pMin */
+      if (p != pMinMax){
+        strcpy(temp, p->elt);
+        strcpy(p->elt, pMinMax->elt);
+        strcpy(pMinMax->elt, temp);
+      }
+      p = p->next;
+    }
+  }else{
+    while (p->next != NULL){
+      pMinMax = searchAdr(p, 0);
+      /* permuter les elts dans p et pMin si p est # de pMin */
+      if (p != pMinMax){
+        strcpy(temp, p->elt);
+        strcpy(p->elt, pMinMax->elt);
+        strcpy(pMinMax->elt, temp);
+      }
+      p = p->next;
+    }
+  }
+  return(head);
+}
+Node *nodeInsertionSort(Node *head){
+    // Initialiser liste trie a NULL
+    Node *pNext, *pCurrent, *pSorted = NULL;
+    pCurrent = head;
+
+    if(AscendingOrDescending() == 0){
+      while (pCurrent != NULL){
+        // Sauvegarder le next pour la prochaine iteration
+          pNext = pCurrent->next;
+          // inserer le courant dans la liste triee
+          pSorted = sortedInsert(pSorted, pCurrent, 0);
+          // Mettre a jour le courant
+          pCurrent = pNext;
+      }
+    }else{
+      while (pCurrent != NULL){
+        // Sauvegarder le next pour la prochaine iteration
+          pNext = pCurrent->next;
+          // inserer le courant dans la liste triee
+          pSorted = sortedInsert(pSorted, pCurrent, 1);
+          // Mettre a jour le courant
+          pCurrent = pNext;
+      }
+    }
+    return(pSorted);
+}
 
 void arrayFunc(){
   printf("how many elements? ");
@@ -542,7 +710,20 @@ void matrix(int optionStr, int optionIntAll, int optionIntRows){
   free(matrixInt);
 }
 void linkedList(){
-  printf("hello world\n");
+  Node  *head, *p;
+
+  head = createList();
+  displayList(head);
+
+  printf("Choose a sorting option:\n\t(1) Selection Sort\n\t(2) Insertion Sort\n>>");
+  do {
+      scanf("%d",&option);
+  } while(option<1 || option>3);
+  switch (option) {
+      case 1: head = nodeSelectionSort(head);break;
+      case 2: head = nodeInsertionSort(head);break;
+  }
+  displayList(head);
 }
 
 int main(){
