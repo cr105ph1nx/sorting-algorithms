@@ -12,31 +12,31 @@ void arrayOption(){
             exit(0); // On arrête tout
         }
         for (i = 0 ; i < n ; i++){
-            printf("What is the value %d ? ", i + 1);
+            printf(" Enter element number %d >> ", i + 1);
             scanf("%d", &array[i]);
         }
     }
 
     return(array);
   }
-  printf("how many elements? ");
+  printf(" How many elements? ");
   scanf("%d", &size);
 
   array = createArray(size);
 
-  printf("Choose a sorting option:\n\t(1) Selection Sort\n\t(2) Bubble Sort\n\t(3) Insertion Sort\n\t(4) Quick Sort\n>>");
+  printf("\n Choose a sorting option:\n\t(1) Selection Sort\n\t(2) Bubble Sort\n\t(3) Insertion Sort\n\t(4) Quick Sort\n>> ");
   do {
       scanf("%d",&option);
   } while(option<1 || option>4);
   switch (option) {
-      case 1:array = arraySelectionSort(array, size);break;
-      case 2:array = arrayBubbleSort(array, size);break;
-      case 3:array = arrayInsertionSort(array, size);break;
+      case 1:array = arraySelectionSort(array, size, 1);break;
+      case 2:array = arrayBubbleSort(array, size, 1);break;
+      case 3:array = arrayInsertionSort(array, size, 1);break;
       case 4:
       if(AscendingOrDescending() == 0)
-        array = quickSortInt(array, 0, size-1, 0);
+        array = quickSortInt(array, 0, size-1, 0, 1);
       else
-        array = quickSortInt(array, 0, size-1, 1);
+        array = quickSortInt(array, 0, size-1, 1, 1);
       break;
   }
   free(array);
@@ -58,7 +58,6 @@ void matrixOption(int checkStr, int checkByRows){
           k++;
         }
       }
-      printf("array created\n");
     }else{//turn given row into array
       if(array == NULL){ // On vérifie si l'allocation a marché ou non
         exit(0); // On arrête tout
@@ -86,7 +85,7 @@ void matrixOption(int checkStr, int checkByRows){
   }
   int i, j, k = 0;
   //if user chose matrix of strings
-  printf("Choose a sorting option:\n\t(1) Selection Sort\n\t(2) Bubble Sort\n\t(3) Insertion Sort\n\t(4) Quick Sort\n>> ");
+  printf("\n Choose a sorting option:\n\t(1) Selection Sort\n\t(2) Bubble Sort\n\t(3) Insertion Sort\n\t(4) Quick Sort\n>> ");
   do {
       scanf("%d",&option);
   } while(option<1 || option>4);
@@ -121,8 +120,7 @@ void matrixOption(int checkStr, int checkByRows){
               option = 1;
             for(i = 0 ; i < rows ; i++){
               array = createArrayFromMatrix(1, i);
-              displayArray(array, columns);
-              array = quickSortInt(array, 0, columns-1, option);
+              array = quickSortInt(array, 0, columns-1, option, 0);
               arrayToMatrix(1, i);
               displayMatrixInt(matrixInt);
             }
@@ -132,18 +130,17 @@ void matrixOption(int checkStr, int checkByRows){
       else{
         array = createArrayFromMatrix(0, 0);
         switch (option) {
-            case 1: array = arraySelectionSort(array, rows*columns); break;
-            case 2: array = arrayBubbleSort(array, rows*columns); break;
-            case 3: array = arrayInsertionSort(array, rows*columns); break;
+            case 1: array = arraySelectionSort(array, rows*columns, 0); break;
+            case 2: array = arrayBubbleSort(array, rows*columns, 0); break;
+            case 3: array = arrayInsertionSort(array, rows*columns, 0); break;
             case 4:
             if(AscendingOrDescending() == 0)
-              array = quickSortInt(array, 0, rows*columns-1, 0);
+              array = quickSortInt(array, 0, rows*columns-1, 0, 0);
             else
-              array = quickSortInt(array, 0, rows*columns-1, 1);
+              array = quickSortInt(array, 0, rows*columns-1, 1, 0);
             break;
         }
         arrayToMatrix(0, 0);
-        displayMatrixInt(matrixInt);
       }
   free(matrixInt); //end of whole matrix sort.
   }//end of matrix of integers
@@ -154,26 +151,27 @@ void listOption(){
   head = createList();
   displayList(head);
 
-  printf("Choose a sorting option:\n\t(1) Selection Sort\n\t(2) Insertion Sort\n>>");
+  printf("\n Choose a sorting option:\n\t(1) Selection Sort\n\t(2) Insertion Sort\n>> ");
   do {
       scanf("%d",&option);
   } while(option<1 || option>3);
   switch (option) {
-      case 1: head = nodeSelectionSort(head);break;
+      case 1: head = nodeInsertionSort(head);break;
       case 2: head = nodeInsertionSort(head);break;
   }
+  displayList(head);
 }
 
 void main(){
   int checkStr = 0, checkByRows = 0;
-  printf("\nChoose a structure to sort:\n\t(1) An Array\n\t(2) A Matrix\n\t(3) A Linked List\n>> ");
+  printf("\n Hello professor.\n Choose a structure to sort:\n\t(1) An Array\n\t(2) A Matrix\n\t(3) A Linked List\n>> ");
   do {
       scanf("%d",&option);
   } while(option<1 || option>3);
   switch (option) {
       case 1: arrayOption(); break;
       case 2:
-        printf("Choose a matrix type:\n\t(1) Type Integer\n\t(2) Type String\n>> ");
+        printf("\n Choose a matrix type:\n\t(1) Type Integer\n\t(2) Type String\n>> ");
         do {
             scanf("%d", &option);
         } while(option<1 || option>2);
@@ -181,7 +179,7 @@ void main(){
             case 1:
               matrixInt = createMatrixInt();
               displayMatrixInt(matrixInt);
-              printf(" Choose a sorting option:\n\t(1) Row by Row\n\t(2) The Whole Matrix\n>> ");
+              printf("\n Choose a sorting option:\n\t(1) Row by Row\n\t(2) The Whole Matrix\n>> ");
               do {
                   scanf("%d",&option);
               } while(option<1 || option>2);
@@ -202,11 +200,11 @@ void main(){
       case 3: listOption(); break;
   }
 
-  printf("\t______________________________\n");
-  printf("Number of swappings: %d\n", nbPerm);
+  printf("\n\t______________________________\n\n");
+  printf("- Number of swappings: %d\n", nbPerm);
   nbPerm = 0;
-  printf("Number of comparisons: %d\n", nbComp);
+  printf("- Number of comparisons: %d\n\n", nbComp);
   nbComp = 0;
+  printf(" Thanks for trying out our program. --Mehamli & Djelloul.\n\n");
 
-  main();
 }
