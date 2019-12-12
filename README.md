@@ -1,4 +1,4 @@
-# sorting-algorithms-dynamic-structs
+# Sorting Algorithms and Dynamic Structures
 
 ## Problematic
 A lot of real-time problems involve looking for elements in an array or any other data structure. This search becomes almost cumbersome when it is done in a voluminous structure (several thousand elements) and disordered, hence the need to sort these structures to facilitate research. In this work, I implement some array sorting methods (by selection, bubble, insertion described below), to generalize them later to matrixes and linked lists.
