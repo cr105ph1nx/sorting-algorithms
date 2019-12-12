@@ -1,52 +1,34 @@
 # sorting-algorithms-dynamic-structs
 
-## Problématique
-Un grand nombre de problèmes réels ont recours à la recherche d’éléments dans un vecteur ou
-toute autre structure de données. Cette recherche devient quasiment lourde lorsqu’elle s’effectue
-dans une structure volumineuse (plusieurs milliers d’éléments) et désordonnée, d’où le besoin de
-trier ces structures afin de faciliter la recherche. Dans ce travail, il s’agit d’implémenter quelques
-méthodes de tri de vecteurs (par sélection, par bulle, par insertion décrites ci-dessous). Et de les
-généraliser par la suite, aux matrices et aux listes chainées.
+## Problematic
+A lot of real-time problems involve looking for elements in an array or any other data structure. This search becomes almost cumbersome when it is done in a voluminous structure (several thousand elements) and disordered, hence the need to sort these structures to facilitate research. In this work, I implement some array sorting methods (by selection, bubble, insertion described below), to generalize them later to matrixes and linked lists.
 
-## Description des méthodes
-**1. Tri par sélection :**
-Cette technique consiste à parcourir séquentiellement le vecteur à trier. A
-l'itération i, la plus petite valeur (respectivement la plus grande s’il s’agit d’un tri dans l’ordre
-décroissant) du tableau est inter-changée avec la valeur située dans la case d'indice i. Au bout
-d’une itération, un élément du vecteur est bien placé ( i.e, il est à sa bonne position).
+## Description of methods
 
-**2. Tri par bulle :** 
-Les petits éléments (respectivement les plus grands) du tableau « remontent »
-(comme des bulles) vers le début du tableau pour atteindre leur position finale. Une fois tous les
-éléments remontés, le tableau est trié. Cette technique se fait par permutations success ives
-d’éléments consécutifs t[i] et t[i+1] après les avoir comparé.
+**1. Selection Sort :**
+This technique consists of sequentially traversing the array to be sorted. At iteration i, the smallest value (respectively the largest value if it is in a descending order) of the array is interchanged with the value in the index i. At the end of an iteration, one element of the vector is correctly placed (i.e, it is in its correct position).
 
-**3. Tri par insertion :**
-Cette technique consiste à considérer à chaque étape, un élément t[i] du
-vecteur et à chercher sa position d’insertion, en décalant les autres éléments de façon à « libérer »
-la position d’insertion de l’élément. À chaque étape, une partie du tableau est déjà ordonnée et une
-nouvelle valeur est insérée à l'endroit approprié.
+**2. Bubble Sort :** 
+The smallest (respectively largest) elements of the array "rise" (like bubbles) towards the beginning of the array to reach their final position. Once every element reassembled, the array is sorted. This technique is done by successive permutations of consecutive elements t [i] and t [i + 1] after comparing them.
 
-# Partie I
-Implémentation des trois méthodes de tri su-décrites pour un vecteur d’entiers de taille n<=1000.
+**3. Insertion Sort :**
+This technique consists in considering at each step, an element t [i] of the array and looking for its insertion position, by shifting the other elements so as to "release" the insertion position of the element. At each step, a part of the array is already ordered and a new value is inserted in the appropriate place.
 
-# Partie II
-Généraliser ces méthodes au tri de matrices, le programme repond aux questions suivantes :
-Trier une matrice d’entiers , ligne par ligne, indépenda mment les unes des autres (chaque
-ligne sera triée à part).
-1. Trier tous les éléments d’une matrice d’entiers.
-2. trier cette matrice de caractères où chaque ligne représente une chaîne de caractères dans l’ordre alphabétique des mots (un mot par ligne.
+# Part I
+Implementation of the three fore-described sorting methods for an array of integers of size n <= 1000.
 
-## Partie III
-Implementation d'un autre algorithme de tri.
+# Part II
+Generalization of these methods in the sorting of matrixes, the program answers the following criterias:
+1. Sort a matrix of integers, row by row, independently of each other (each line will be sorted separately).
+2. Sort all the elements of the matrix of integers.
+3. Sort a matrix of characters where each line represents a string of characters in alphabetical order of words (one word per line).
 
-## Partie IV
-Aapter deux methodes de tries au tri d’une liste chainée (structure dynamique) de
-mots (chaines de caractères).
+## Part III
+Implementation of another sorting algorithm (Quicksort).
 
-## De plus
-1. Chaque programme (ou algorithme) de tri affiche l’état du vecteur (matrice ou liste)
-après chaque itération afin de voir la progression du tri.
-2. Chaque programme de tri (ou algorithme) affiche à la fin le nombre de comparaisons
-effectuées (nbComp) et le nombre de permutations effectuées (nbPerm). Ces deux
-nombres sont calculés dans chaque algorithme et varient d’une exécution à l’autre.
+## Part IV
+Adaptation of two sorting methods to sort a linked list (dynamic structure) of words (strings).
+
+## More
+1. Each sorting program (or algorithm) displays the state of the array (matrix or list) after each swapping of elements in order to see the progress of the sort.
+2. Each sorting program (or algorithm) displays at the end the number of comparisons made and the number of swappings performed. These two numbers are calculated in each algorithm and vary from one run to another.
