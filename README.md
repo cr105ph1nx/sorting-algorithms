@@ -10,17 +10,19 @@ généraliser par la suite, aux matrices et aux listes chainées.
 
 ## Description des méthodes
 **1. Tri par sélection :**
-cette technique consiste à parcourir séquentiellement le vecteur à trier. A
+Cette technique consiste à parcourir séquentiellement le vecteur à trier. A
 l'itération i, la plus petite valeur (respectivement la plus grande s’il s’agit d’un tri dans l’ordre
 décroissant) du tableau est inter-changée avec la valeur située dans la case d'indice i. Au bout
 d’une itération, un élément du vecteur est bien placé ( i.e, il est à sa bonne position).
+
 **2. Tri par bulle :** 
-les petits éléments (respectivement les plus grands) du tableau « remontent »
+Les petits éléments (respectivement les plus grands) du tableau « remontent »
 (comme des bulles) vers le début du tableau pour atteindre leur position finale. Une fois tous les
 éléments remontés, le tableau est trié. Cette technique se fait par permutations success ives
 d’éléments consécutifs t[i] et t[i+1] après les avoir comparé.
-**3. Tri par insertion : **
-cette technique consiste à considérer à chaque étape, un élément t[i] du
+
+**3. Tri par insertion :**
+Cette technique consiste à considérer à chaque étape, un élément t[i] du
 vecteur et à chercher sa position d’insertion, en décalant les autres éléments de façon à « libérer »
 la position d’insertion de l’élément. À chaque étape, une partie du tableau est déjà ordonnée et une
 nouvelle valeur est insérée à l'endroit approprié.
